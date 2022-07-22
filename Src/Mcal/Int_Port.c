@@ -44,6 +44,15 @@
  *  GLOBAL FUNCTIONS
  *********************************************************************************************************************/
 
+/******************************************************************************
+* \Syntax          : void Set_PortPin_Mode(Channel_Id_Types PortPin , uint32 Mode , PortPinDirection direction, DIO_LevelType level)                                     
+* \Description     : Set Mode which is dio or analogue or from pcm                                                                                                              
+* \Sync\Async      : Synchronous                                               
+* \Reentrancy      : Non Reentrant                                             
+* \Parameters (in) : ConfigPtr [array from configuration containing port , pin , direction , current , level , mode , attach , interuptlevel ]                     
+* \Parameters (out): None                                                      
+* \Return value:   : None
+*******************************************************************************/
 
  void Set_PortPin_Mode(Channel_Id_Types PortPin , uint32 Mode , PortPinDirection direction, DIO_LevelType level)
  {
@@ -78,6 +87,15 @@
      }
 
  }
+ /******************************************************************************
+* \Syntax          : void Set_PortPin_Direction(Channel_Id_Types PortPin , PortPinDirection direction)                                     
+* \Description     : Set direction which is input or output                                                                                                            
+* \Sync\Async      : Synchronous                                               
+* \Reentrancy      : Non Reentrant                                             
+* \Parameters (in) : ConfigPtr [array from configuration containing port , pin , direction , current , level , mode , attach , interuptlevel ]                     
+* \Parameters (out): None                                                      
+* \Return value:   : None
+*******************************************************************************/
 
  void Set_PortPin_Direction(Channel_Id_Types PortPin , PortPinDirection direction)
  {
@@ -96,6 +114,15 @@
 
 
  }
+ /******************************************************************************
+* \Syntax          : Set_PortPin_Current(Channel_Id_Types PortPin , PortPinDirection current)                                    
+* \Description     : Set Current which is R2R 2mA or R4R 4mA or R8R 8mA                                                                                                            
+* \Sync\Async      : Synchronous                                               
+* \Reentrancy      : Non Reentrant                                             
+* \Parameters (in) : ConfigPtr [array from configuration containing port , pin , direction , current , level , mode , attach , interuptlevel ]                     
+* \Parameters (out): None                                                      
+* \Return value:   : None
+*******************************************************************************/
 
  void Set_PortPin_Current(Channel_Id_Types PortPin , PortPinDirection current)
  {
@@ -120,6 +147,15 @@
 
 
  }
+  /******************************************************************************
+* \Syntax          : Set_PortPin_Attach(Channel_Id_Types PortPin , PortPinDirection attach)                                   
+* \Description     : Set Attach which is R2R 2mA or R4R 4mA or R8R 8mA                                                                                                            
+* \Sync\Async      : Synchronous                                               
+* \Reentrancy      : Non Reentrant                                             
+* \Parameters (in) : ConfigPtr [array from configuration containing port , pin , direction , current , level , mode , attach , interuptlevel ]                     
+* \Parameters (out): None                                                      
+* \Return value:   : None
+*******************************************************************************/
 
  void Set_PortPin_Attach(Channel_Id_Types PortPin , PortPinDirection attach)
  {
@@ -148,11 +184,11 @@
 
 /******************************************************************************
 * \Syntax          : void Port_init(void)                                      
-* \Description     :                                     
+* \Description     : Port intialization for port , pin , direction , current , level , mode , attach , interuptlevel                                    
 *                                                                             
 * \Sync\Async      : Synchronous                                               
 * \Reentrancy      : Non Reentrant                                             
-* \Parameters (in) : None                     
+* \Parameters (in) : ConfigPtr [array from configuration containing port , pin , direction , current , level , mode , attach , interuptlevel ]                     
 * \Parameters (out): None                                                      
 * \Return value:   : None
 *******************************************************************************/

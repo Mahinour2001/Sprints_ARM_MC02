@@ -259,11 +259,6 @@ typedef struct {
 }Port_ConfigTypes;
 
 
-
-
-
-
-
 extern const Port_ConfigTypes GPIO_ARR_INPUT[];
 
 /**********************************************************************************************************************

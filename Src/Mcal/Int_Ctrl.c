@@ -62,6 +62,7 @@ void INTCTRL_init(void)
 {
 	//PRIMASK and FAULTMASK (core registers) must be cleared for delay interupt handler purposes
 	ENABLE_INT_PRIMASK()
+    ENABLE_INT_FH()
 
 	INT_Types int_num ;
 	uint32 Grp_Pri,SubGrp_Pri;
@@ -69,9 +70,9 @@ void INTCTRL_init(void)
     uint32 En_RegNum,En_RegOffset,IntEn_BitOffset;
 	uint32 i ;
 	
-	
-	APINT->B.VECTKEY=VECTKEY_num;
-	APINT->B.PRIGROUP=PRI_REG;
+	APINT->R |=VECTKEY_num<<16 |(PRI_REG<<8);
+	// APINT->B.VECTKEY=VECTKEY_num;
+	// APINT->B.PRIGROUP=PRI_REG;
      /*TODO Configure Grouping\SubGrouping System in APINT register in SCB */
 	for(i=0;i<arr_size;i++)
 	{
