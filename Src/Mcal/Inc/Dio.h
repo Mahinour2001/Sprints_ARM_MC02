@@ -1,7 +1,7 @@
 /**********************************************************************************************************************
  *  FILE DESCRIPTION
  *  -------------------------------------------------------------------------------------------------------------------
- *         File:  INT_CTRL_LCFG.c
+ *         File:  DIO.h
  *    Component:  -
  *       Module:  -
  *
@@ -11,38 +11,90 @@
 
 
 
-#ifndef INT_CTRL_LCFG_H
-#define INT_CTRL_lCFG_H
+#ifndef DIO_H
+#define DIO_H
 
 /**********************************************************************************************************************
  * INCLUDES
  *********************************************************************************************************************/
 #include  "Std_Types.h"
-#include  "Int_Ctrl.h"
-#include  "Int_Ctrl_Cfg.h"
 
 
 /**********************************************************************************************************************
  *  GLOBAL CONSTANT MACROS
  *********************************************************************************************************************/
+typedef enum {
+	
+ PIN0                                         ,
+ PIN1                                         ,
+ PIN2                                         ,
+ PIN3                                         ,
+ PIN4                                         ,
+ PIN5                                         ,
+ PIN6                                         ,
+ PIN7                                         
+ 
+}DIO_ChannelType;
+
+typedef enum {
+
+ PortA                                        ,
+ PortB                                        ,
+ PortC                                        ,
+ PortD                                        ,
+ PortE                                        
+
+}DIO_PortType;
+
+typedef enum {
+
+ LOW                                           ,
+ HIGH                                          
+
+}DIO_LevelType;
+
+
+typedef struct  {
+
+
+ DIO_PortType  Port_num                       ;
+ DIO_ChannelType Chann_n                      ;            
+
+}Channel_Id_Types;
+
+
+typedef uint32  DIO_PortLevelType ;
+
 
 
 
 /**********************************************************************************************************************
  *  GLOBAL DATA TYPES AND STRUCTURES
-
  *********************************************************************************************************************/
+
+
 /**********************************************************************************************************************
  *  GLOBAL DATA PROTOTYPES
  *********************************************************************************************************************/
-const  NVIC_PRIO NVIC_ARR_INPUT[arr_size]={{GPIO_Port_A,1,0},{GPIO_Port_B,2,0}};
+
  
 /**********************************************************************************************************************
  *  GLOBAL FUNCTION PROTOTYPES
+ 
  *********************************************************************************************************************/
+ DIO_LevelType Dio_ReadChannel(Channel_Id_Types ChannelId);
+
+void Dio_WriteChannel(Channel_Id_Types ChannelId,DIO_LevelType Level);
+
+DIO_PortType Dio_ReadPort(DIO_PortType PortId);
+
+void Dio_WritePort(DIO_PortType PortId,DIO_PortLevelType Level);
+
+DIO_LevelType Dio_FlipChannel(Channel_Id_Types ChannelId);
 
 
-#endif /* INT_CTRL_LCFG_H */
+
+#endif /* DIOL_H */
 /**********************************************************************************************************************
- *  END OF FILE: INT_CTRL_LCFG.h
+ *  END OF FILE: DIO.h
  *********************************************************************************************************************/
