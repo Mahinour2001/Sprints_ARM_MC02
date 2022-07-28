@@ -33,7 +33,7 @@ void Gpt_NotificationFn(void);
 const Gpt_ConfigType Gpt_Config[GPT_ARRAYSIZE] =
 {
 	/* channel										channelTickFreq					channelTickMaxValue					channelMode								gptNotification */
-	{GPT_16_32_bit_Timer_0,				0x9896800,										0xFF,										GPT_CH_MODE_PERIODIC,			Gpt_NotificationFn}
+	{GPT_16_32_bit_Timer_0,				0xF42400,										0xFF,										GPT_CH_MODE_PERIODIC,			Gpt_NotificationFn}
 };
 /**********************************************************************************************************************
  *  LOCAL FUNCTION PROTOTYPES

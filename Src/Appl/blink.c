@@ -73,14 +73,14 @@ void Blink_Led(void)
         {
             Dio_WritePort(PortF,LOW);
             //Gpt_StartTimer(GPT_16_32_bit_Timer_0,0x200);
-             Gpt_StartTimer(GPT_16_32_bit_Timer_0,TIMER_ON);
+             Gpt_StartTimer(GPT_16_32_bit_Timer_0,TIMER_OFF);
 
         }
         else
         {
             Dio_WritePort(PortF,0x4);
             //Gpt_StartTimer(GPT_16_32_bit_Timer_0,0x100);
-             Gpt_StartTimer(GPT_16_32_bit_Timer_0,TIMER_OFF);
+             Gpt_StartTimer(GPT_16_32_bit_Timer_0,TIMER_ON);
 
         }
          Timer_Flag==LOW;
