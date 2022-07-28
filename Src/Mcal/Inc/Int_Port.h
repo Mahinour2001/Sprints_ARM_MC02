@@ -243,7 +243,7 @@ typedef enum{
 
 }PortPin_interuptlevel;
 
-
+typedef void(*GpioNotification)(DIO_ChannelType pin_num);
 typedef struct {
 
     Channel_Id_Types      CHANNEL;
@@ -253,13 +253,15 @@ typedef struct {
     PortPinOutputCurrent  CURRENT;
     PortPinInternalAttach  ATTACH;
     PortPin_interuptlevel  INTERRUPT;
-    
-    
+    GpioNotification       gpioNotification;
 
 }Port_ConfigTypes;
 
 
 extern const Port_ConfigTypes GPIO_ARR_INPUT[];
+extern uint32 Mode_Flag ;
+extern uint32 TIMER_ON ;
+extern uint32 TIMER_OFF ;
 
 /**********************************************************************************************************************
  *  GLOBAL DATA PROTOTYPES

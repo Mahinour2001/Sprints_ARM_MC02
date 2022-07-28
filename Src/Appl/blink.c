@@ -2,11 +2,10 @@
 /**********************************************************************************************************************
  *  FILE DESCRIPTION
  *  -----------------------------------------------------------------------------------------------------------------*/
-/**        \file  Int_Ctrl.c
- *        \brief  Nested Vector Interrupt Controller Driver
+/**        \file  blink.c
+ *        \brief  
  *
- *      \details  The Driver Configure All MCU interrupts Priority into gorups and subgroups
- *                Enable and Disable Navic Interrupt Gate for Peripherals
+ *      \details  
  *
  *********************************************************************************************************************/
 
@@ -15,16 +14,17 @@
  *********************************************************************************************************************/
 #include  "Std_Types.h"
 #include "Mcu_Hw.h"
-#include "Int_Ctrl.h"
-#include "Int_Ctrl_Cfg.h"
+#include "Dio.h"
+#include "Timers.h"
+#include "Int_Port.h"
+
+
+
 
 /**********************************************************************************************************************
 *  LOCAL MACROS CONSTANT\FUNCTION
 *********************************************************************************************************************/
-#define NVIC_bxxx   0x4  
-#define NVIC_bxxy   0x5
-#define NVIC_bxyy   0x6
-#define NVIC_byyy   0x7
+
 /**********************************************************************************************************************
  *  LOCAL DATA 
  *********************************************************************************************************************/
@@ -57,63 +57,43 @@
 * \Parameters (out): None                                                      
 * \Return value:   : None
 *******************************************************************************/
+DIO_LevelType Timer_Flag =LOW ;
+extern uint32 TIMER_ON;
+extern uint32 TIMER_OFF;
+extern uint32 MODE  ;
 
-void INTCTRL_init(void)
+void Blink_Led(void)
 {
-	//PRIMASK and FAULTMASK (core registers) must be cleared for delay interupt handler purposes
-	ENABLE_INT_PRIMASK()
-    ENABLE_INT_FH()
-
-	INT_Types int_num ;
-	uint32 Grp_Pri,SubGrp_Pri;
-	uint32 Pri_RegNum,Pri_RegOffset,Int_PriRegNum,IntPri_BitOffset,Pri_GroupField;
-    uint32 En_RegNum,En_RegOffset,IntEn_BitOffset;
-	uint32 i ;
-	
-	
-	// APINT->B.VECTKEY=VECTKEY_num;
-	// APINT->B.PRIGROUP=PRI_REG;
-
-     /*TODO Configure Grouping\SubGrouping System in APINT register in SCB */
-     APINT->R |=VECTKEY_num<<16 |(PRI_REG<<8);
-	for(i=0;i<arr_size;i++)
-	{
-		 int_num=NVIC_ARR_INPUT[i].Int_num;
-		 Grp_Pri=NVIC_ARR_INPUT[i].group_priority;
-		 SubGrp_Pri=NVIC_ARR_INPUT[i].sub_priority;
-
-		Pri_RegNum    = (uint32)(int_num/4);
-        Pri_RegOffset = Pri_RegNum*4;
-        Int_PriRegNum = int_num%4;
-        IntPri_BitOffset = 5*(Int_PriRegNum+1)+3*Int_PriRegNum;
-
-		#if (PRI_REG==NVIC_bxxx)
-            Pri_GroupField=Grp_Pri;
-        #elif (PRI_REG==NVIC_bxxy)
-            Pri_GroupField=(Grp_Pri<<1)|(SubGrp_Pri);
-        #elif (PRI_REG==NVIC_bxyy)
-            Pri_GroupField=(Grp_Pri<<2)|(SubGrp_Pri);            
-        #elif(PRI_REG==NVIC_byyy)
-            Pri_GroupField=SubGrp_Pri;
-		 #else 
-            #error
-        #endif
-
-		GET_HWREG(PRIx_NVIC,Pri_RegOffset) |= Pri_GroupField << IntPri_BitOffset;
     
-        /*TODO : Enable\Disable based on user configurations in NVIC_ENx and SCB_Sys Registers*/
-        En_RegNum = (uint32)(int_num/32);
-        En_RegOffset = En_RegNum*4;
-        IntEn_BitOffset = int_num%32;
+    if(Timer_Flag==HIGH)
+    {
+        DIO_PortLevelType led_statues ;
+        led_statues=Dio_ReadPort(PortF);
+        if(led_statues==0x4)
+        {
+            Dio_WritePort(PortF,LOW);
+            //Gpt_StartTimer(GPT_16_32_bit_Timer_0,0x200);
+             Gpt_StartTimer(GPT_16_32_bit_Timer_0,TIMER_ON);
 
-        GET_HWREG(EN0,En_RegOffset) |= (1<<IntEn_BitOffset);
+        }
+        else
+        {
+            Dio_WritePort(PortF,0x4);
+            //Gpt_StartTimer(GPT_16_32_bit_Timer_0,0x100);
+             Gpt_StartTimer(GPT_16_32_bit_Timer_0,TIMER_OFF);
 
-	}
+        }
+         Timer_Flag==LOW;
+
+    }
+   
+
 
 }
-    
+
+
 
 /**********************************************************************************************************************
- *  END OF FILE: Int_Ctrl.c
+ *  END OF FILE: blink.c
  *********************************************************************************************************************/
 

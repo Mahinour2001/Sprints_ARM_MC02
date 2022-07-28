@@ -11,63 +11,77 @@
 
 
 
-#ifndef DIO_H
-#define DIO_H
+#ifndef TIMERS_H
+#define TIMERS_H
 
 /**********************************************************************************************************************
  * INCLUDES
  *********************************************************************************************************************/
 #include  "Std_Types.h"
+#include "Timers_Cfg.h"
+
 
 
 /**********************************************************************************************************************
  *  GLOBAL CONSTANT MACROS
  *********************************************************************************************************************/
 typedef enum {
+
+    GPT_16_32_bit_Timer_0         ,
+    GPT_16_32_bit_Timer_1         ,
+    GPT_16_32_bit_Timer_2         ,
+    GPT_16_32_bit_Timer_3         ,
+    GPT_16_32_bit_Timer_4         ,
+    GPT_16_32_bit_Timer_5         ,
+    GPT_32_64_bit_Wide_Timer_0    ,
+    GPT_32_64_bit_Wide_Timer_1    ,
+    GPT_32_64_bit_Wide_Timer_2    ,
+    GPT_32_64_bit_Wide_Timer_3    ,
+    GPT_32_64_bit_Wide_Timer_4    ,
+    GPT_32_64_bit_Wide_Timer_5
 	
- PIN0                                         ,
- PIN1                                         ,
- PIN2                                         ,
- PIN3                                         ,
- PIN4                                         ,
- PIN5                                         ,
- PIN6                                         ,
- PIN7                                         
- 
-}DIO_ChannelType;
+}Gpt_ChannelType;
 
-typedef enum {
+typedef uint32 Gpt_ValueType;
 
- PortA                                        ,
- PortB                                        ,
- PortC                                        ,
- PortD                                        ,
- PortE                                        ,
- PortF
+typedef enum
+{
+	GPT_MODE_NORMAL,
+	GPT_MODE_SLEEP 
 
+}Gpt_ModeType;
 
-}DIO_PortType;
+typedef enum
+{
+	GPT_PREDEF_TIMER_1US_16BIT,
+	GPT_PREDEF_TIMER_1US_24BIT,
+	GPT_PREDEF_TIMER_1US_32BIT,
+	GPT_PREDEF_TIMER_100US_32BIT
+}Gpt_PredefTimerType;
 
-typedef enum {
+typedef uint32 Gpt_ChannelTickFrequency;
+typedef uint32 GptChannelTickValueMax;
 
- LOW                                           ,
- HIGH                                          
+typedef enum
+{
+	GPT_CH_MODE_PERIODIC,
+	GPT_CH_MODE_ONESHOT
+}ChannelMode;
 
-}DIO_LevelType;
+typedef void(*GptNotification)(void);
 
+typedef struct
+{
+	Gpt_ChannelType  					channel;
+	Gpt_ValueType                 channelTickFreq;
+	GptChannelTickValueMax  	channelTickMaxValue;
+	ChannelMode								channelMode;
+	GptNotification						gptNotification;
+}Gpt_ConfigType;
 
-typedef struct  {
+extern const Gpt_ConfigType Gpt_Config[];
 
-
- DIO_PortType  Port_num                       ;
- DIO_ChannelType Chann_n                      ;            
-
-}Channel_Id_Types;
-
-
-typedef uint32  DIO_PortLevelType ;
-
-
+extern DIO_LevelType Timer_Flag ;
 
 
 /**********************************************************************************************************************
@@ -82,21 +96,28 @@ typedef uint32  DIO_PortLevelType ;
  
 /**********************************************************************************************************************
  *  GLOBAL FUNCTION PROTOTYPES
- 
  *********************************************************************************************************************/
- DIO_LevelType Dio_ReadChannel(Channel_Id_Types ChannelId);
+void Gpt_Init( const Gpt_ConfigType* ConfigPtr);
 
-void Dio_WriteChannel(Channel_Id_Types ChannelId,DIO_LevelType Level);
+void Gpt_DisableNotification( Gpt_ChannelType Channel );
 
-DIO_PortType Dio_ReadPort(DIO_PortType PortId);
+void Gpt_EnableNotification( Gpt_ChannelType Channel );
 
-void Dio_WritePort(DIO_PortType PortId,DIO_PortLevelType Level);
+Gpt_ValueType Gpt_GetTimeElapsed( Gpt_ChannelType Channel );
 
-DIO_LevelType Dio_FlipChannel(Channel_Id_Types ChannelId);
+//Std_ReturnType Gpt_GetPredefTimerValue( Gpt_PredefTimerType PredefTimer, uint32* TimeValuePtr);
+
+Gpt_ValueType Gpt_GetTimeRemaining( Gpt_ChannelType Channel );
+
+void Gpt_StartTimer( Gpt_ChannelType Channel, Gpt_ValueType Value );
+
+void Gpt_StopTimer( Gpt_ChannelType Channel );
+
+void Gpt_Notification(void);
 
 
 
-#endif /* DIOL_H */
+#endif /* TIMERS_H */
 /**********************************************************************************************************************
- *  END OF FILE: DIO.h
+ *  END OF FILE: Timera.h
  *********************************************************************************************************************/

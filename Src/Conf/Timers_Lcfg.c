@@ -1,30 +1,28 @@
-
 /**********************************************************************************************************************
  *  FILE DESCRIPTION
  *  -----------------------------------------------------------------------------------------------------------------*/
-/**        \file  Int_Ctrl.c
- *        \brief  Nested Vector Interrupt Controller Driver
+/**        \file  FileName.c
+ *        \brief  
  *
- *      \details  The Driver Configure All MCU interrupts Priority into gorups and subgroups
- *                Enable and Disable Navic Interrupt Gate for Peripherals
+ *      \details  
+ *
  *
  *********************************************************************************************************************/
 
 /**********************************************************************************************************************
  *  INCLUDES
  *********************************************************************************************************************/
-#include  "Std_Types.h"
-#include "Mcu_Hw.h"
-#include "Int_Ctrl.h"
-#include "Int_Ctrl_Cfg.h"
-
+#include "Std_Types.h"
+#include "Timers_Cfg.h"
+#include "Timers.h"
+#include "Dio.h"
+#include "Int_Port.h"
 /**********************************************************************************************************************
 *  LOCAL MACROS CONSTANT\FUNCTION
 *********************************************************************************************************************/
-#define NVIC_bxxx   0x4  
-#define NVIC_bxxy   0x5
-#define NVIC_bxyy   0x6
-#define NVIC_byyy   0x7
+ 
+void Gpt_NotificationFn(void);
+
 /**********************************************************************************************************************
  *  LOCAL DATA 
  *********************************************************************************************************************/
@@ -32,7 +30,11 @@
 /**********************************************************************************************************************
  *  GLOBAL DATA
  *********************************************************************************************************************/
-
+const Gpt_ConfigType Gpt_Config[GPT_ARRAYSIZE] =
+{
+	/* channel										channelTickFreq					channelTickMaxValue					channelMode								gptNotification */
+	{GPT_16_32_bit_Timer_0,				0x9896800,										0xFF,										GPT_CH_MODE_PERIODIC,			Gpt_NotificationFn}
+};
 /**********************************************************************************************************************
  *  LOCAL FUNCTION PROTOTYPES
  *********************************************************************************************************************/
@@ -44,76 +46,27 @@
 /**********************************************************************************************************************
  *  GLOBAL FUNCTIONS
  *********************************************************************************************************************/
-
+void Gpt_NotificationFn(void)
+{
+	
+	Gpt_StopTimer(0);
+	Timer_Flag =HIGH ; 
+	
+}
 
 /******************************************************************************
-* \Syntax          : void INTCTRL_init(void)                                      
-* \Description     : initialize Nvic Module by parsing the Configuration 
-*                    into Nvic registers                                    
+* \Syntax          : Std_ReturnType FunctionName(AnyType parameterName)        
+* \Description     : Describe this service                                    
 *                                                                             
 * \Sync\Async      : Synchronous                                               
 * \Reentrancy      : Non Reentrant                                             
-* \Parameters (in) : None                     
+* \Parameters (in) : parameterName   Parameter Describtion                     
 * \Parameters (out): None                                                      
-* \Return value:   : None
+* \Return value:   : Std_ReturnType  E_OK
+*                                    E_NOT_OK                                  
 *******************************************************************************/
 
-void INTCTRL_init(void)
-{
-	//PRIMASK and FAULTMASK (core registers) must be cleared for delay interupt handler purposes
-	ENABLE_INT_PRIMASK()
-    ENABLE_INT_FH()
-
-	INT_Types int_num ;
-	uint32 Grp_Pri,SubGrp_Pri;
-	uint32 Pri_RegNum,Pri_RegOffset,Int_PriRegNum,IntPri_BitOffset,Pri_GroupField;
-    uint32 En_RegNum,En_RegOffset,IntEn_BitOffset;
-	uint32 i ;
-	
-	
-	// APINT->B.VECTKEY=VECTKEY_num;
-	// APINT->B.PRIGROUP=PRI_REG;
-
-     /*TODO Configure Grouping\SubGrouping System in APINT register in SCB */
-     APINT->R |=VECTKEY_num<<16 |(PRI_REG<<8);
-	for(i=0;i<arr_size;i++)
-	{
-		 int_num=NVIC_ARR_INPUT[i].Int_num;
-		 Grp_Pri=NVIC_ARR_INPUT[i].group_priority;
-		 SubGrp_Pri=NVIC_ARR_INPUT[i].sub_priority;
-
-		Pri_RegNum    = (uint32)(int_num/4);
-        Pri_RegOffset = Pri_RegNum*4;
-        Int_PriRegNum = int_num%4;
-        IntPri_BitOffset = 5*(Int_PriRegNum+1)+3*Int_PriRegNum;
-
-		#if (PRI_REG==NVIC_bxxx)
-            Pri_GroupField=Grp_Pri;
-        #elif (PRI_REG==NVIC_bxxy)
-            Pri_GroupField=(Grp_Pri<<1)|(SubGrp_Pri);
-        #elif (PRI_REG==NVIC_bxyy)
-            Pri_GroupField=(Grp_Pri<<2)|(SubGrp_Pri);            
-        #elif(PRI_REG==NVIC_byyy)
-            Pri_GroupField=SubGrp_Pri;
-		 #else 
-            #error
-        #endif
-
-		GET_HWREG(PRIx_NVIC,Pri_RegOffset) |= Pri_GroupField << IntPri_BitOffset;
-    
-        /*TODO : Enable\Disable based on user configurations in NVIC_ENx and SCB_Sys Registers*/
-        En_RegNum = (uint32)(int_num/32);
-        En_RegOffset = En_RegNum*4;
-        IntEn_BitOffset = int_num%32;
-
-        GET_HWREG(EN0,En_RegOffset) |= (1<<IntEn_BitOffset);
-
-	}
-
-}
-    
 
 /**********************************************************************************************************************
- *  END OF FILE: Int_Ctrl.c
+ *  END OF FILE: FileName.c
  *********************************************************************************************************************/
-

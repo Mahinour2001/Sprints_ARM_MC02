@@ -94,34 +94,34 @@ typedef union{
 //Priorities on the system handlers are set with the NVIC System Handler Priority n (SYSPRIn)
 //Interrupts are enabled through the NVIC Interrupt Set Enable n (ENn)
 //prioritized with the NVIC Interrupt Priority n (PRIn)
- #define  SWTRIG                           ((volatile uint32*)(CorePeripherals_base_address+0xF00))
- #define  EN0                              ((volatile uint32*)(CorePeripherals_base_address+0x100))
- #define  EN1                              ((volatile uint32*)(CorePeripherals_base_address+0x104))
- #define  EN2                              ((volatile uint32*)(CorePeripherals_base_address+0x108))
- #define  EN3                              ((volatile uint32*)(CorePeripherals_base_address+0x10C))
- #define  EN4                              ((volatile uint32*)(CorePeripherals_base_address+0x110))
- #define  PRIx_NVIC                        ((volatile uint32*)(CorePeripherals_base_address+0x400))
+ #define  SWTRIG                                       ((volatile uint32*)(CorePeripherals_base_address+0xF00))
+ #define  EN0                                          ((volatile uint32*)(CorePeripherals_base_address+0x100))
+ #define  EN1                                          ((volatile uint32*)(CorePeripherals_base_address+0x104))
+ #define  EN2                                          ((volatile uint32*)(CorePeripherals_base_address+0x108))
+ #define  EN3                                          ((volatile uint32*)(CorePeripherals_base_address+0x10C))
+ #define  EN4                                          ((volatile uint32*)(CorePeripherals_base_address+0x110))
+ #define  PRIx_NVIC                                    ((volatile uint32*)(CorePeripherals_base_address+0x400))
 
 /**************************************
 *   SYSTEM CONTROL REGISTRES
 ***************************************/
-#define  INTCTRL                           ((volatile Reg_Bit_type*)(CorePeripherals_base_address+0xD04))
-#define  APINT                             ((volatile APINT_Reg_type*)(CorePeripherals_base_address+0xD0C))
-#define  VECTKEY_num                        0x05FA
-#define  VTABLE                            ((volatile uint32*)(CorePeripherals_base_address+0xD08))
-#define  SYSPRI1                           ((volatile uint32*)(CorePeripherals_base_address+0xD18))
-#define  SYSPRI2                           ((volatile uint32*)(CorePeripherals_base_address+0xD1C))
-#define  SYSPRI3                           ((volatile uint32*)(CorePeripherals_base_address+0xD20))
-#define  SYSHNDCTRL                        ((volatile uint32*)(CorePeripherals_base_address+0xD24))
-#define  FAULTSTAT                         ((volatile uint32*)(CorePeripherals_base_address+0xD28))
-#define  HFAULTSTAT                        ((volatile uint32*)(CorePeripherals_base_address+0xD2C))
+#define  INTCTRL                                       ((volatile Reg_Bit_type*)(CorePeripherals_base_address+0xD04))
+#define  APINT                                         ((volatile APINT_Reg_type*)(CorePeripherals_base_address+0xD0C))
+#define  VECTKEY_num                                    0x05FA
+#define  VTABLE                                        ((volatile uint32*)(CorePeripherals_base_address+0xD08))
+#define  SYSPRI1                                       ((volatile uint32*)(CorePeripherals_base_address+0xD18))
+#define  SYSPRI2                                       ((volatile uint32*)(CorePeripherals_base_address+0xD1C))
+#define  SYSPRI3                                       ((volatile uint32*)(CorePeripherals_base_address+0xD20))
+#define  SYSHNDCTRL                                    ((volatile uint32*)(CorePeripherals_base_address+0xD24))
+#define  FAULTSTAT                                     ((volatile uint32*)(CorePeripherals_base_address+0xD28))
+#define  HFAULTSTAT                                    ((volatile uint32*)(CorePeripherals_base_address+0xD2C))
 
 // core registers
-#define DISABLE_INT_PRIMASK()   __asm__("CPSID i");         /*  Disable interrupts and configurable fault handlers (set PRIMASK) */
-#define DISABLE_INT_FH()        __asm__("CPSID f");         /*  Disable interrupts and all fault handlers (set PRIMASK)          */
-
-#define ENABLE_INT_PRIMASK()    __asm__("CPSIE i");         /* Enable interrupts and configurable fault handlers (clear PRIMASK) */
-#define ENABLE_INT_FH()         __asm__("CPSIE f");         /* Enable interrupts and configurable fault handlers (clear PRIMASK) */
+#define DISABLE_INT_PRIMASK()                          __asm__("CPSID i");         /*  Disable interrupts and configurable fault handlers (set PRIMASK) */
+#define DISABLE_INT_FH()                               __asm__("CPSID f");         /*  Disable interrupts and all fault handlers (set PRIMASK)          */
+                       
+#define ENABLE_INT_PRIMASK()                           __asm__("CPSIE i");         /* Enable interrupts and configurable fault handlers (clear PRIMASK) */
+#define ENABLE_INT_FH()                                __asm__("CPSIE f");         /* Enable interrupts and configurable fault handlers (clear PRIMASK) */
 
 
 
@@ -129,29 +129,29 @@ typedef union{
 *   SYSTEMCONTROL REGISTERS
 ***************************************/
 
-#define  SYSTEM_CONTROL_BASEADD                        0x400FE000
-#define GPIOHBCTL                                     *((volatile uint32*)(SYSTEM_CONTROL_BASEADD+0x06C))
-#define RCGCGPIO                                      *((volatile uint32*)(SYSTEM_CONTROL_BASEADD+0x608))
+#define  SYSTEM_CONTROL_BASEADD                         0x400FE000
+#define GPIOHBCTL                                       *((volatile uint32*)(SYSTEM_CONTROL_BASEADD+0x06C))
+#define RCGCGPIO                                        *((volatile uint32*)(SYSTEM_CONTROL_BASEADD+0x608))
 
 
 /**************************************
 *   GPIO REGISTRE
 ***************************************/
 
-#define GPIO_Port_A_AHB_BaseAdd        0x40058000  
-#define GPIO_Port_B_AHB_BaseAdd        0x40059000
-#define GPIO_Port_C_AHB_BaseAdd        0x4005A000
-#define GPIO_Port_D_AHB_BaseAdd        0x4005B000
-#define GPIO_Port_E_AHB_BaseAdd        0x4005C000
-#define GPIO_Port_F_AHB_BaseAdd        0x4005D000
-
-
-
-#define GPIO_Port_B_APB_BaseAdd         0x40005000
-#define GPIO_Port_C_APB_BaseAdd         0x40006000
-#define GPIO_Port_D_APB_BaseAdd         0x40007000
-#define GPIO_Port_E_APB_BaseAdd         0x40024000
-#define GPIO_Port_F_APB_BaseAdd         0x40025000
+#define GPIO_Port_A_AHB_BaseAdd                         0x40058000  
+#define GPIO_Port_B_AHB_BaseAdd                         0x40059000
+#define GPIO_Port_C_AHB_BaseAdd                         0x4005A000
+#define GPIO_Port_D_AHB_BaseAdd                         0x4005B000
+#define GPIO_Port_E_AHB_BaseAdd                         0x4005C000
+#define GPIO_Port_F_AHB_BaseAdd                         0x4005D000
+                
+                
+                
+#define GPIO_Port_B_APB_BaseAdd                         0x40005000
+#define GPIO_Port_C_APB_BaseAdd                         0x40006000
+#define GPIO_Port_D_APB_BaseAdd                         0x40007000
+#define GPIO_Port_E_APB_BaseAdd                         0x40024000
+#define GPIO_Port_F_APB_BaseAdd                         0x40025000
 
 
 
@@ -193,6 +193,63 @@ typedef union{
 #define  GPIOPCell_ID_3(base_address)                   *((volatile uint32*)(base_address+0xFFC))
 
 
+/**************************************
+*   GPT REGISTRES
+***************************************/
+
+#define GPT_16_32_bit_Timer_0_BASEADDRESS                              0x40030000
+#define GPT_16_32_bit_Timer_1_BASEADDRESS                              0x40031000
+#define GPT_16_32_bit_Timer_2_BASEADDRESS                              0x40032000
+#define GPT_16_32_bit_Timer_3_BASEADDRESS                              0x40033000
+#define GPT_16_32_bit_Timer_4_BASEADDRESS                              0x40034000
+#define GPT_16_32_bit_Timer_5_BASEADDRESS                              0x40035000
+#define GPT_32_64_bit_Wide_Timer_0_BASEADDRESS                         0x40036000
+#define GPT_32_64_bit_Wide_Timer_1_BASEADDRESS                         0x40037000
+#define GPT_32_64_bit_Wide_Timer_2_BASEADDRESS                         0x4004C000
+#define GPT_32_64_bit_Wide_Timer_3_BASEADDRESS                         0x4004D000
+#define GPT_32_64_bit_Wide_Timer_4_BASEADDRESS                         0x4004E000
+#define GPT_32_64_bit_Wide_Timer_5_BASEADDRESS                         0x4004F000
+
+
+#define GPTMCFG(base_address)                           *((volatile uint32*)(base_address+0x000))            
+#define GPTMTAMR(base_address)                          *((volatile uint32*)(base_address+0x004))
+#define GPTMTBMR(base_address)                          *((volatile uint32*)(base_address+0x008))
+#define GPTMCTL(base_address)                           *((volatile uint32*)(base_address+0x00C))
+#define GPTMSYNC(base_address)                          *((volatile uint32*)(base_address+0x010))
+#define GPTMIMR(base_address)                           *((volatile uint32*)(base_address+0x018))
+#define GPTMRIS(base_address)                           *((volatile uint32*)(base_address+0x01C))
+#define GPTMMIS(base_address)                           *((volatile uint32*)(base_address+0x020))
+#define GPTMICR(base_address)                           *((volatile uint32*)(base_address+0x024))
+#define GPTMTAILR(base_address)                         *((volatile uint32*)(base_address+0x028))
+#define GPTMTBILR(base_address)                         *((volatile uint32*)(base_address+0x02C))
+#define GPTMTAMATCHR(base_address)                      *((volatile uint32*)(base_address+0x030))
+#define GPTMTBMATCHR(base_address)                      *((volatile uint32*)(base_address+0x034))
+#define GPTMTAPR(base_address)                          *((volatile uint32*)(base_address+0x038))
+#define GPTMTBPR(base_address)                          *((volatile uint32*)(base_address+0x03C))
+#define GPTMTAPMR(base_address)                         *((volatile uint32*)(base_address+0x040))
+#define GPTMTBPMR(base_address)                         *((volatile uint32*)(base_address+0x044))
+#define GPTMTAR(base_address)                           *((volatile uint32*)(base_address+0x048))
+#define GPTMTBR(base_address)                           *((volatile uint32*)(base_address+0x04C))
+#define GPTMTAV(base_address)                           *((volatile uint32*)(base_address+0x050))
+#define GPTMTBV(base_address)                           *((volatile uint32*)(base_address+0x054))
+#define GPTMRTCP(base_address)                          *((volatile uint32*)(base_address+0x058)) 
+#define GPTMTAPS(base_address)                          *((volatile uint32*)(base_address+0x05C)) 
+#define GPTMTBPS(base_address)                          *((volatile uint32*)(base_address+0x060)) 
+#define GPTMTAPV(base_address)                          *((volatile uint32*)(base_address+0x064)) 
+#define GPTMTBPV(base_address)                          *((volatile uint32*)(base_address+0x068)) 
+#define GPTMPP(base_address)                            *((volatile uint32*)(base_address+0xFC0))
+
+
+#define RCGCTIMER                                        *((volatile uint32*)(SYSTEM_CONTROL_BASEADD+0x604))
+#define RCGC1                                        *((volatile uint32*)(SYSTEM_CONTROL_BASEADD+0x104))
+#define  TAEN    0
+#define  TBEN    8
+#define  TATOIM  0
+#define  TAMR    0
+#define  TACDIR  4
+
+ 
+
 
 
    
@@ -206,11 +263,11 @@ typedef union{
 /**********************************************************************************************************************
  *  GLOBAL DATA TYPES AND STRUCTURES
  *********************************************************************************************************************/
-#define SET_BIT(VAR,BITNO) ((VAR) |=  (1 << (BITNO)))
-#define CLR_BIT(VAR,BITNO) ((VAR) &= ~(1 << (BITNO)))
-#define TOG_BIT(VAR,BITNO) (VAR ^=  (1 << BITNO))
-#define GET_BIT(VAR,BITNO) ((VAR >> (BITNO)) & 0x01)
-#define GET_HWREG(BaseAddr,RegOffset)      *((volatile uint32*)(BaseAddr+RegOffset))
+#define SET_BIT(VAR,BITNO)                             ((VAR) |=  (1 << (BITNO)))
+#define CLR_BIT(VAR,BITNO)                             ((VAR) &= ~(1 << (BITNO)))
+#define TOG_BIT(VAR,BITNO)                             (VAR ^=  (1 << BITNO))
+#define GET_BIT(VAR,BITNO)                             ((VAR >> (BITNO)) & 0x01)
+#define GET_HWREG(BaseAddr,RegOffset)                  *((volatile uint32*)(BaseAddr+RegOffset))
 
 /**********************************************************************************************************************
 

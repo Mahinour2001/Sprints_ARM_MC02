@@ -38,6 +38,7 @@ typedef signed char suint8;
 typedef signed short int suint16;
 typedef signed long int suint32;
 
+#define NULL 0 
 
 
 

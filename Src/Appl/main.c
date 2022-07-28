@@ -1,25 +1,25 @@
-#include "Std_Types.h"
-#include "Int_Port.h"
-#include "Dio.h"
+
+
+
+
+
 
 int main(void)
 {
-	   //Channel_Id_Types ChannelId ={PortA,PIN0};
-     //Dio_FlipChannel( ChannelId);
-    Port_Init(GPIO_ARR_INPUT);
-	// INTCTRL_init();
-	// Dio_ReadChannel(Channel_Id_Types ChannelId);
-
-    // Dio_WriteChannel(Channel_Id_Types ChannelId,DIO_LevelType Level);
-
-    // Dio_ReadPort(DIO_PortType PortId);
     
-    //  Dio_WritePort(DIO_PortType PortId,DIO_PortLevelType Level);
+	  
+      NVIC_USER();
+      PORT_USER();
+      TIMERS_USER();
+    
      
-    
 	while(1)
 	{
-		
+      
+		//Dio_FlipChannel(ChannelId);
+      SetTimer_User_switches();
+      Blink_Led();
+
 		
 	}
 	

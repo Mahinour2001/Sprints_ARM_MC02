@@ -74,13 +74,15 @@ DIO_LevelType Dio_FlipChannel(Channel_Id_Types ChannelId)
     
     if(Dio_ReadChannel(ChannelId)==LOW)
     {
-        Dio_WriteChannel(ChannelId,HIGH);
+       // Dio_WriteChannel(ChannelId,HIGH);
+        Dio_WritePort(ChannelId.Port_num, HIGH);
         DIO_LevelType level =HIGH;
 
     }
     else
     {
-        Dio_WriteChannel(ChannelId,LOW);
+        //Dio_WriteChannel(ChannelId,LOW);
+        Dio_WritePort(ChannelId.Port_num, LOW);
         DIO_LevelType level =LOW;
 
     }

@@ -43,7 +43,7 @@
 /**********************************************************************************************************************
  *  GLOBAL FUNCTIONS
  *********************************************************************************************************************/
-
+GpioNotification  ISR_ARRAY_GPIO[6];
 /******************************************************************************
 * \Syntax          : void Set_PortPin_Mode(Channel_Id_Types PortPin , uint32 Mode , PortPinDirection direction, DIO_LevelType level)                                     
 * \Description     : Set Mode which is dio or analogue or from pcm                                                                                                              
@@ -205,6 +205,7 @@ void Port_Init(const Port_ConfigTypes* ConfigPtr){
         PortPinInternalAttach  attach =ConfigPtr[i].ATTACH;
         DIO_LevelType level =ConfigPtr[i].VALUE;
         PortPin_interuptlevel interrupt = ConfigPtr[i].INTERRUPT;
+       // ISR_ARRAY_GPIO[channel]=ConfigPtr[i].gpioNotification;
 
 
         //    /TODO ENABLE AHB ON GPIOHBCTL REGISTER/
@@ -294,6 +295,35 @@ void Port_Init(const Port_ConfigTypes* ConfigPtr){
     
 
 }
+void GPIOF_Handler(void)
+ {
+     
+    
+    if (ISR_ARRAY_GPIO[PortF] !=NULL)
+    {
+        GpioNotification  GPIOF_Handler_ISR =  ISR_ARRAY_GPIO[PortF];
+        uint32 read_GPIORIS;
+        read_GPIORIS=GPIORIS(Port_Base_Addresses[PortF]);
+        for(int i=0;i<8;i++)
+        {
+            DIO_ChannelType pin_number;
+            pin_number=GET_BIT(read_GPIORIS,i);
+            if(pin_number== HIGH)
+            {
+                GPIOF_Handler_ISR(pin_number);
+               // SET_BIT(GPIOICR,pin_number);
+
+            }
+
+           
+        }
+      
+    }
+   
+
+  }
+
+
 
 
 
