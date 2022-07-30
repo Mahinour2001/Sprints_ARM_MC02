@@ -1,10 +1,3 @@
-#include  "Std_Types.h"
-#include "Mcu_Hw.h"
-#include "Dio.h"
-#include "Timers.h"
-#include "Int_Port.h"
-
-
 
 int main(void)
 {
@@ -17,7 +10,7 @@ int main(void)
      
 	while(1)
 	{
-      Dio_WritePort(PortB,GPTMTAILR(GPT_16_32_bit_Timer_0_BASEADDRESS));
+      //Dio_WritePort(PortB,GPTMTAILR(GPT_16_32_bit_Timer_0_BASEADDRESS));
       SetTimer_User_switches();
       Blink_Led();
 
