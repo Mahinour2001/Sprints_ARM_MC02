@@ -23,6 +23,11 @@ void SetTimer_User_switches(void)
        Dio_WritePort(PortF,0x00);
        mode_pin4_statues = LOW;
       //while(mode_pin4_statues == HIGH);
+      if (MODE ==0)
+      {
+         Timer_Flag=HIGH;
+
+      }
    }
    
      if(timer_pin0_statues ==HIGH)
@@ -47,11 +52,7 @@ void SetTimer_User_switches(void)
       {
          Gpt_StopTimer(GPT_16_32_bit_Timer_0);
       }
-      else
-      {
-         Timer_Flag=HIGH;
-
-      }
+      
    
 
 }

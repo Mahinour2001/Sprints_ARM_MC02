@@ -83,7 +83,8 @@ void Blink_Led(void)
              Gpt_StartTimer(GPT_16_32_bit_Timer_0,TIMER_ON);
 
         }
-         Timer_Flag==LOW;
+
+         Timer_Flag=LOW;
 
     }
    
