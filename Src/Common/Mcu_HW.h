@@ -87,6 +87,8 @@ typedef union{
 	
 }APINT_Reg_type;
 
+// volatile used to get from RAM always not from cache as if read-only register any write will not be seen 
+//volatile -> get always from RAM as in pins data electric so could change as volts so must read from RAM 
 #define  CorePeripherals_base_address     0xE000E000
 /**************************************
 *   NVIC REGISTRE

@@ -17,6 +17,7 @@
 #include "Dio.h"
 #include "Timers.h"
 #include "Int_Port.h"
+#include "blink.h"
 
 
 
@@ -58,9 +59,7 @@
 * \Return value:   : None
 *******************************************************************************/
 DIO_LevelType Timer_Flag =LOW ;
-extern uint32 TIMER_ON;
-extern uint32 TIMER_OFF;
-extern uint32 MODE  ;
+
 
 void Blink_Led(void)
 {
@@ -68,19 +67,19 @@ void Blink_Led(void)
     if(Timer_Flag==HIGH)
     {
         DIO_PortLevelType led_statues ;
-        led_statues=Dio_ReadPort(PortF);
-        if(led_statues==0x4)
+        led_statues=Dio_ReadPort(PORT_OF_LED);
+        if(led_statues==LED_STATUES)
         {
-            Dio_WritePort(PortF,LOW);
+            Dio_WritePort(PORT_OF_LED,LOW);
             //Gpt_StartTimer(GPT_16_32_bit_Timer_0,0x200);
-             Gpt_StartTimer(GPT_16_32_bit_Timer_0,TIMER_OFF);
+             Gpt_StartTimer(TIMER_CHOSEN,TIMER_OFF);
 
         }
         else
         {
-            Dio_WritePort(PortF,0x4);
+            Dio_WritePort(PORT_OF_LED,LED_STATUES);
             //Gpt_StartTimer(GPT_16_32_bit_Timer_0,0x100);
-             Gpt_StartTimer(GPT_16_32_bit_Timer_0,TIMER_ON);
+             Gpt_StartTimer(TIMER_CHOSEN,TIMER_ON);
 
         }
 

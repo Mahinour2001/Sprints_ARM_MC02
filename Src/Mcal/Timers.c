@@ -75,7 +75,8 @@ GptNotification  ISR_ARRAY[12];
 
 void Gpt_Init(const Gpt_ConfigType* ConfigPtr){
 
-  for(int i=0;i<GPT_ARRAYSIZE;i++)
+   int i=0;
+  for(i;i<GPT_ARRAYSIZE;i++)
   {   
       Gpt_ChannelType  Channel =ConfigPtr[i].channel;
 	    Gpt_ValueType  Value=ConfigPtr[i].channelTickFreq;

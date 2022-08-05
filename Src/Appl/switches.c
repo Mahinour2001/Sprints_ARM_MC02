@@ -2,10 +2,11 @@
 #include "Int_Port.h"
 #include "Dio.h"
 #include "Timers.h"
+#include "blink.h"
 
-extern uint32 TIMER_ON=0xF42400;
-extern uint32 TIMER_OFF=0xF42400;
-extern uint32 MODE =0 ;
+ uint32 TIMER_ON=0xF42400;
+ uint32 TIMER_OFF=0xF42400;
+uint32 MODE =0 ;
 
 void SetTimer_User_switches(void)
 {
@@ -48,7 +49,7 @@ void SetTimer_User_switches(void)
       }
       
       }
-      if(MODE == 1 || MODE ==2)
+      if((MODE == 1) || (MODE ==2))
       {
          Gpt_StopTimer(GPT_16_32_bit_Timer_0);
       }
